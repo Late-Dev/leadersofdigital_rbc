@@ -34,5 +34,3 @@ class VideoToTextHandler:
     def _save_video_from_bytes(file_bytes: bytes, file_output: Path):
         with open(file_output, "wb") as out_file:
             out_file.write(file_bytes)
-    
-
