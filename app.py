@@ -1,7 +1,9 @@
 from dash import html, dcc, Dash
 import dash_bootstrap_components as dbc
 from dash.dependencies import Output, State, Input
-
+from dash_bootstrap_components._components.Card import Card
+from io import BytesIO
+import base64
 
 app = Dash(__name__, suppress_callback_exceptions=True,
            external_stylesheets=[dbc.themes.BOOTSTRAP], title='РБК Xavier video annotator')
@@ -25,25 +27,69 @@ navbar = dbc.NavbarSimple(
 adminPanel = html.Div([
 
     navbar,
-    dbc.Container(children="hello")
+    dbc.Container(children=[
+        dcc.Upload(
+            id="upload_file",
+            children=html.Div([
+                'Перетащите сюда или ',
+                html.A('выберите файл')
+            ]),
+            style={
+                'width': '100%',
+                'height': '60px',
+                'lineHeight': '60px',
+                'borderWidth': '1px',
+                'borderStyle': 'dashed',
+                'borderRadius': '5px',
+                'textAlign': 'center',
+                'margin': '10px'
+            },
+            multiple=False
+        ),
+        html.Div(id='output-data-upload'),
+
+    ])
 ])
+
+
+@app.callback(
+    Output('output-data-upload', 'children'),
+    Input('upload_file', 'contents'),
+    State('upload_file', 'filename'),
+)
+def upload_file(content, filename):
+    if(content != None):
+        saveFile = open('./input/'+filename, 'wb')
+        # bytes = BytesIO()
+
+        saveFile.write(base64.b64decode(content.split(';')[1]))
+        saveFile.close
+    return str(content.split(';')[1])
+
+
+def feed_generate(videos):
+    list_of_cards = []
+    for video in range(videos):
+        list_of_cards.append(
+            dbc.Card(video)
+        )
+
+    return list_of_cards
+
 
 index_page = html.Div([
     navbar,
     dbc.Container(children=[
         dbc.Container(children=[
             dbc.Row([
-                html.H1('Темы новостей', style={'margin': '10px'}),
-                # html.Div('Здесь расположены карточки со статьями'),
-                # html.Div('Сортировка карточек от новой к старой'),
-                # html.Div('в карточке открыта новейшая и закрыты старые статьи'),
-                # html.Div('Заголовок карточки - тематика'),
-                dbc.Button('обновить', id='reload-button',
-                           className="mb-3", style={'margin': '10px'}),
+                html.H1('Лента новостей', style={'margin': '10px'}),
+
+                # dbc.Button('обновить', id='reload-button',
+                #            className="mb-3", style={'margin': '10px'}),
             ]),
-            # dcc.Store(id='clusters'),
             html.Div(dbc.Spinner(color="primary"),
-                     id="cluster-cards", style={'align': 'center'})
+                     id="cluster-cards", style={'align': 'center'}),
+            dbc.Card(children=feed_generate(4))
 
         ])
     ])
