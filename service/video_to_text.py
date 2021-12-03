@@ -26,8 +26,9 @@ class BaseVideoToText(ABC):
 
 class VideoToTextService(BaseVideoToText):
 
-    def __init__(self, audio_to_text_model: BaseModel):
+    def __init__(self, audio_to_text_model: BaseModel, spell_corrector: BaseModel):
         self.audio_to_text_model = audio_to_text_model
+        self.spell_corrector = spell_corrector
     
     @staticmethod
     def _save_audio_from_video(
@@ -60,9 +61,11 @@ class VideoToTextService(BaseVideoToText):
         chunk_paths = VideoToTextService._save_audio_from_video(video_path, audio_save_path, filename)
         transcrypts = self.audio_to_text_model.inference_model(chunk_paths)
         text_from_audio = "".join([i['transcription'] for i in transcrypts])
-        self._rm_audio_files(chunk_paths)
+        VideoToTextService._rm_audio_files(chunk_paths)
+        text_from_audio = self.spell_corrector.inference_model(text_from_audio)
         return text_from_audio
 
+    @staticmethod
     def _rm_audio_files(paths: List):
         for file_path in paths:
             os.remove(file_path)

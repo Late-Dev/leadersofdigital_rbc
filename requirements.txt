@@ -3,3 +3,4 @@ asrecognition
 moviepy
 dash-bootstrap-components
 lxml
+sortedcontainers

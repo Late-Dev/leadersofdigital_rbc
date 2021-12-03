@@ -13,10 +13,12 @@ def create_dummy_handler() -> VideoToTextHandler:
   
 def create_transcrypt_handler() -> VideoToTextHandler:
     from infrastructure.audio_to_text.models import TranscryptModel
+    from infrastructure.audio_to_text.spell_check import SpellingCorrection
 
     transcrypt_model = TranscryptModel()
     video_to_text_service = VideoToTextService(transcrypt_model)
-    handler = VideoToTextHandler(video_to_text_service)
+    spell_corrector = SpellingCorrection()
+    handler = VideoToTextHandler(video_to_text_service, spell_corrector)
     return handler
 
 
