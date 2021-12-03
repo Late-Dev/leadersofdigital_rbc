@@ -1,7 +1,7 @@
 # leadersofdigital_rbc
 
 ## Требования
-Python 3.7 установленный Docker и nvidia-docker для запуска на gpu
+установленный Docker и nvidia-docker для запуска на gpu
 
 -    Загрузить подготовленный docker образ `docker pull electriclizard/rbc:latest`
 -    Запустить контейнер на цпу `docker run -p 8050:8050 rbc` и приложение откроется на порту 8050
