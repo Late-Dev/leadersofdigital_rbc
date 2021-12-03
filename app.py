@@ -4,6 +4,9 @@ from dash.dependencies import Output, State, Input
 from dash_bootstrap_components._components.Card import Card
 from io import BytesIO
 import base64
+from handlers.create_handler import get_handler
+
+transcrypt_handler = get_handler('transcrypt_handler')
 
 app = Dash(__name__, suppress_callback_exceptions=True,
            external_stylesheets=[dbc.themes.BOOTSTRAP], title='РБК Xavier video annotator')
@@ -59,12 +62,12 @@ adminPanel = html.Div([
 )
 def upload_file(content, filename):
     if(content != None):
-        saveFile = open('./input/'+filename, 'wb')
-        # bytes = BytesIO()
+        bts = base64.b64decode(content.split(';')[1])
+        # bytes = BytesIO(bts)
+        trans = transcrypt_handler.handle(bts, filename)
 
-        saveFile.write(base64.b64decode(content.split(';')[1]))
-        saveFile.close
-    return str(content.split(';')[1])
+        return trans
+    return
 
 
 def feed_generate(videos):
