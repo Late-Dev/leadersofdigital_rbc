@@ -6,7 +6,7 @@ from io import BytesIO
 import base64
 from handlers.create_handler import get_handler
 
-transcrypt_handler = get_handler('transcrypt_handler')
+transcrypt_handler = get_handler('dummy_handler')
 
 app = Dash(__name__, suppress_callback_exceptions=True,
            external_stylesheets=[dbc.themes.BOOTSTRAP], title='РБК Xavier video annotator')
@@ -67,9 +67,10 @@ def upload_file(content, filename):
         bts = base64.b64decode(content.split(';')[1][7:])
         # bytes = BytesIO(bts)
         trans = transcrypt_handler.handle(bts, filename)
-        result = str(trans[0]['transcription'])
+        print(trans)
+        result = str(trans['text'])
         source = content
-        return dbc.Col([html.P(result), html.Video(id="video_content", src=source, controls=True)])
+        return dbc.Col([html.P(result), html.P(children=', '.join(trans['tags'])), html.Video(id="video_content", src=source, controls=True)])
     return html.P()
 
 
