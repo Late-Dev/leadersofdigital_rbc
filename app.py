@@ -69,11 +69,22 @@ def upload_file(content, filename):
     return
 
 
+"""
+<iframe width="560" height="315" src="https://www.youtube.com/embed/qj06URsDq_0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>"""
+
+
 def feed_generate(videos):
     list_of_cards = []
-    for video in range(videos):
+    for video in videos:
         list_of_cards.append(
-            dbc.Card(video)
+            dbc.Row(
+                [
+                    dbc.Col(html.Iframe(src="https://www.youtube.com/embed/" +
+                                        video['id'], height=315, width=560)),
+                    dbc.Col(video['text'])
+                ]
+            )
+
         )
 
     return list_of_cards
@@ -89,9 +100,13 @@ index_page = html.Div([
                 # dbc.Button('обновить', id='reload-button',
                 #            className="mb-3", style={'margin': '10px'}),
             ]),
-            html.Div(dbc.Spinner(color="primary"),
-                     id="cluster-cards", style={'align': 'center'}),
-            dbc.Card(children=feed_generate(4))
+            # html.Div(dbc.Spinner(color="primary"),
+            #          id="cluster-cards", style={'align': 'center'}),
+            dbc.Card(children=feed_generate(
+                [{'id': 'qj06URsDq_0', 'text': 'МОЩНЫЙ ВЗРЫВ В ЦЕНТРЕ МЮНКИНА ЧЕТЫРЕ ЧЕЛОВЕКА ПОСТРАДАЛИ ОДИН В ТЯЖЕЛОМ СОСТОЯНИИ СДЕТОНИРОВАЛА АБИАБОМБА ВРЕМЁН ВТОРОЙ МИРОВОЙ ВОЙНЫ НАСТРОЙ ПЛОЩАДКЕ НЕДАЛЕКО ОТ ГЛАВНОГО ЖИЗНЬ ДОРОЖНОГО ВОКЗАЛА БАВАРСКОЙ СТОЛИЦЕ ВЕСОМ ДВЕСТИ ПЯТЬДЕСЯТ КИЛОГРАММОВ СТРОИТЕЛЕЙ НАТКНУЛИСЬ НА НЕЁ ВО ВРЕМЯ БУРЕНИЯ ДВИЖЕНИЯ ПОЕЗДУВ В ЭТОМ РАЙОНЕ ПРИОСТАНОВЛЕНА ПОЛИЦИЯ ЦЕПИЛА ТЕРРИТОРИЮ ПОЧЕМУ БУМ БУ НЕТ НАРУЖИЛИ ДО НАЧАЛА РАБОТ СЕЙЧАС ВЫЯСНЯЮТ'},
+                    
+
+                 ]))
 
         ])
     ])
