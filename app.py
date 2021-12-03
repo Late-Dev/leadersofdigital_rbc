@@ -49,8 +49,8 @@ adminPanel = html.Div([
             },
             multiple=False
         ),
-        html.Div(dbc.Spinner(id="output-data-upload", color="primary"),
-                 style={'align': 'center'}),
+        html.Div(dbc.Spinner(id="output-data-upload", color="primary", ),
+                 style={'align': 'center', 'margin': '10px'}),
         # html.Div(id=''),
 
     ])
@@ -67,8 +67,10 @@ def upload_file(content, filename):
         bts = base64.b64decode(content.split(';')[1][7:])
         # bytes = BytesIO(bts)
         trans = transcrypt_handler.handle(bts, filename)
-        return str(trans[0]['transcription'])
-    return "загрузите файл"
+        result = str(trans[0]['transcription'])
+        source = content
+        return dbc.Col([html.P(result), html.Video(id="video_content", src=source, controls=True)])
+    return html.P()
 
 
 """
