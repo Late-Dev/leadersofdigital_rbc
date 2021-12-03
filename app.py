@@ -49,7 +49,9 @@ adminPanel = html.Div([
             },
             multiple=False
         ),
-        html.Div(id='output-data-upload'),
+        html.Div(dbc.Spinner(id="output-data-upload", color="primary", ),
+                 style={'align': 'center', 'margin': '10px'}),
+        # html.Div(id=''),
 
     ])
 ])
@@ -65,8 +67,10 @@ def upload_file(content, filename):
         bts = base64.b64decode(content.split(';')[1][7:])
         # bytes = BytesIO(bts)
         trans = transcrypt_handler.handle(bts, filename)
-        return str(trans[0]['transcription'])
-    return
+        result = str(trans[0]['transcription'])
+        source = content
+        return dbc.Col([html.P(result), html.Video(id="video_content", src=source, controls=True)])
+    return html.P()
 
 
 """
@@ -104,7 +108,7 @@ index_page = html.Div([
             #          id="cluster-cards", style={'align': 'center'}),
             dbc.Card(children=feed_generate(
                 [{'id': 'qj06URsDq_0', 'text': 'МОЩНЫЙ ВЗРЫВ В ЦЕНТРЕ МЮНКИНА ЧЕТЫРЕ ЧЕЛОВЕКА ПОСТРАДАЛИ ОДИН В ТЯЖЕЛОМ СОСТОЯНИИ СДЕТОНИРОВАЛА АБИАБОМБА ВРЕМЁН ВТОРОЙ МИРОВОЙ ВОЙНЫ НАСТРОЙ ПЛОЩАДКЕ НЕДАЛЕКО ОТ ГЛАВНОГО ЖИЗНЬ ДОРОЖНОГО ВОКЗАЛА БАВАРСКОЙ СТОЛИЦЕ ВЕСОМ ДВЕСТИ ПЯТЬДЕСЯТ КИЛОГРАММОВ СТРОИТЕЛЕЙ НАТКНУЛИСЬ НА НЕЁ ВО ВРЕМЯ БУРЕНИЯ ДВИЖЕНИЯ ПОЕЗДУВ В ЭТОМ РАЙОНЕ ПРИОСТАНОВЛЕНА ПОЛИЦИЯ ЦЕПИЛА ТЕРРИТОРИЮ ПОЧЕМУ БУМ БУ НЕТ НАРУЖИЛИ ДО НАЧАЛА РАБОТ СЕЙЧАС ВЫЯСНЯЮТ'},
-                    
+
 
                  ]))
 
