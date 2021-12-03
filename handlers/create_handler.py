@@ -31,11 +31,11 @@ def create_transcrypt_handler() -> VideoToTextHandler:
 
 
 handlers = {
-    "dummy_handler": create_dummy_handler(),
-    "transcrypt_handler": create_transcrypt_handler()
+    "dummy_handler": create_dummy_handler,
+    "transcrypt_handler": create_transcrypt_handler
 }
 
 
 def get_handler(handler_name: str):
-    handler = handlers.get(handler_name, None)
+    handler = handlers.get(handler_name, None)()
     return handler
