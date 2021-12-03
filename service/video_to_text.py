@@ -37,7 +37,7 @@ class VideoToTextService(BaseVideoToText):
         video_path: str, 
         audio_save_path: str,
         filename: str, 
-        clip_duration: int = 110
+        clip_duration: int = 60
         ) -> str:
 
         chunk_paths = []
