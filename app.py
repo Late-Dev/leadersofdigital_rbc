@@ -62,11 +62,9 @@ adminPanel = html.Div([
 )
 def upload_file(content, filename):
     if(content != None):
-        bts = base64.b64decode(content.split(';')[1])
-        # bytes = BytesIO(bts)
+        bts = base64.b64decode(content.split(';')[1][7:])
         trans = transcrypt_handler.handle(bts, filename)
-
-        return trans
+        return str(trans[0]['transcription'])
     return
 
 
