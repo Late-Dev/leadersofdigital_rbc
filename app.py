@@ -4,7 +4,7 @@ from dash.dependencies import Output, State, Input
 
 
 app = Dash(__name__, suppress_callback_exceptions=True,
-                external_stylesheets=[dbc.themes.BOOTSTRAP], title='РБК Xavier video annotator')
+           external_stylesheets=[dbc.themes.BOOTSTRAP], title='РБК Xavier video annotator')
 
 app.layout = html.Div([
     dcc.Location(id='url', refresh=False),
@@ -22,7 +22,6 @@ navbar = dbc.NavbarSimple(
     dark=True,)
 
 
-
 adminPanel = html.Div([
 
     navbar,
@@ -32,12 +31,23 @@ adminPanel = html.Div([
 index_page = html.Div([
     navbar,
     dbc.Container(children=[
-        "hello world"
+        dbc.Container(children=[
+            dbc.Row([
+                html.H1('Темы новостей', style={'margin': '10px'}),
+                # html.Div('Здесь расположены карточки со статьями'),
+                # html.Div('Сортировка карточек от новой к старой'),
+                # html.Div('в карточке открыта новейшая и закрыты старые статьи'),
+                # html.Div('Заголовок карточки - тематика'),
+                dbc.Button('обновить', id='reload-button',
+                           className="mb-3", style={'margin': '10px'}),
+            ]),
+            # dcc.Store(id='clusters'),
+            html.Div(dbc.Spinner(color="primary"),
+                     id="cluster-cards", style={'align': 'center'})
 
+        ])
     ])
 ])
-
-
 
 
 @app.callback(Output('page-content', 'children'),
@@ -51,4 +61,4 @@ def display_page(pathname):
 
 
 if __name__ == '__main__':
-    app.run_server(host='0.0.0.0')
+    app.run_server(host='0.0.0.0', debug=True)
