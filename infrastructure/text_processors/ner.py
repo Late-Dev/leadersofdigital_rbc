@@ -17,7 +17,7 @@ class DummyEntityExtractor:
     def __init__(self):
         pass
 
-    def get_entities(text: str):
+    def get_entities(self, text: str):
         return ['entity1', 'entity2']
 
 
