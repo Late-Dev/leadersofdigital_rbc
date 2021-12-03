@@ -12,6 +12,15 @@ from natasha import (
 )
 
 
+class DummyEntityExtractor:
+
+    def __init__(self):
+        pass
+
+    def get_entities(text: str):
+        return ['entity1', 'entity2']
+
+
 class EntityExtractor:
     def __init__(self):
         self.segmenter = Segmenter()
