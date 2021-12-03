@@ -23,5 +23,6 @@ RUN pip install https://github.com/kpu/kenlm/archive/master.zip
 RUN pip install -r requirements.txt
 RUN pip install jupyter
 
-# # COPY . ./
-CMD jupyter notebook --ip 0.0.0.0 --allow-root
+COPY . ./
+# CMD jupyter notebook --ip 0.0.0.0 --allow-root
+ENTRYPOINT [ "python", "./app.py" ]

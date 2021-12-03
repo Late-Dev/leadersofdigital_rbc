@@ -12,7 +12,7 @@ class BaseModel(ABC):
         pass
 
     @abstractmethod
-    def inference_model(self, audio_rec) -> str:
+    def inference_model(self, model_input) -> str:
         """
         Make a model nference
         :return:
