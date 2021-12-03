@@ -14,4 +14,5 @@ class TranscryptModel(BaseModel):
 
     def inference_model(self, rec_paths: List) -> str:
         transcriptions = self.asr.transcribe(rec_paths)
-        return transcriptions
+        text_from_audio = "".join([i['transcription'] for i in transcriptions])
+        return text_from_audio

@@ -61,8 +61,7 @@ class VideoToTextService(BaseVideoToText):
         video_path = str(video_path.absolute())
         # extract audio
         chunk_paths = VideoToTextService._save_audio_from_video(video_path, audio_save_path, filename)
-        transcrypts = self.audio_to_text_model.inference_model(chunk_paths)
-        text_from_audio = "".join([i['transcription'] for i in transcrypts])
+        text_from_audio = self.audio_to_text_model.inference_model(chunk_paths)
         VideoToTextService._rm_audio_files(chunk_paths)
         text_from_audio = self.spell_corrector.inference_model(text_from_audio)
         entities = self.ner.get_entities(text_from_audio)
