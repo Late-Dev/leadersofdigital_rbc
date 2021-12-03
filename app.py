@@ -49,7 +49,9 @@ adminPanel = html.Div([
             },
             multiple=False
         ),
-        html.Div(id='output-data-upload'),
+        html.Div(dbc.Spinner(id="output-data-upload", color="primary"),
+                 style={'align': 'center'}),
+        # html.Div(id=''),
 
     ])
 ])
@@ -66,7 +68,7 @@ def upload_file(content, filename):
         # bytes = BytesIO(bts)
         trans = transcrypt_handler.handle(bts, filename)
         return str(trans[0]['transcription'])
-    return
+    return "загрузите файл"
 
 
 """
@@ -104,7 +106,7 @@ index_page = html.Div([
             #          id="cluster-cards", style={'align': 'center'}),
             dbc.Card(children=feed_generate(
                 [{'id': 'qj06URsDq_0', 'text': 'МОЩНЫЙ ВЗРЫВ В ЦЕНТРЕ МЮНКИНА ЧЕТЫРЕ ЧЕЛОВЕКА ПОСТРАДАЛИ ОДИН В ТЯЖЕЛОМ СОСТОЯНИИ СДЕТОНИРОВАЛА АБИАБОМБА ВРЕМЁН ВТОРОЙ МИРОВОЙ ВОЙНЫ НАСТРОЙ ПЛОЩАДКЕ НЕДАЛЕКО ОТ ГЛАВНОГО ЖИЗНЬ ДОРОЖНОГО ВОКЗАЛА БАВАРСКОЙ СТОЛИЦЕ ВЕСОМ ДВЕСТИ ПЯТЬДЕСЯТ КИЛОГРАММОВ СТРОИТЕЛЕЙ НАТКНУЛИСЬ НА НЕЁ ВО ВРЕМЯ БУРЕНИЯ ДВИЖЕНИЯ ПОЕЗДУВ В ЭТОМ РАЙОНЕ ПРИОСТАНОВЛЕНА ПОЛИЦИЯ ЦЕПИЛА ТЕРРИТОРИЮ ПОЧЕМУ БУМ БУ НЕТ НАРУЖИЛИ ДО НАЧАЛА РАБОТ СЕЙЧАС ВЫЯСНЯЮТ'},
-                    
+
 
                  ]))
 
