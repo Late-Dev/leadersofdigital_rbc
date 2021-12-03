@@ -12,6 +12,7 @@ import numpy as np
 from moviepy import editor as mp
 
 from infrastructure.audio_to_text.abstract import BaseModel
+from infrastructure.text_processors.ner import EntityExtractor
 
 
 class BaseVideoToText(ABC):
@@ -26,9 +27,10 @@ class BaseVideoToText(ABC):
 
 class VideoToTextService(BaseVideoToText):
 
-    def __init__(self, audio_to_text_model: BaseModel, spell_corrector: BaseModel):
+    def __init__(self, audio_to_text_model: BaseModel, spell_corrector: BaseModel, ner: EntityExtractor):
         self.audio_to_text_model = audio_to_text_model
         self.spell_corrector = spell_corrector
+        self.ner = ner
     
     @staticmethod
     def _save_audio_from_video(
@@ -53,7 +55,7 @@ class VideoToTextService(BaseVideoToText):
 
         return chunk_paths
 
-    def video_to_text(self, video_path: Path) -> str:
+    def video_to_text(self, video_path: Path) -> dict:
         audio_save_path = str(video_path.resolve().parent)
         filename = str(video_path.stem)
         video_path = str(video_path.absolute())
@@ -63,7 +65,11 @@ class VideoToTextService(BaseVideoToText):
         text_from_audio = "".join([i['transcription'] for i in transcrypts])
         VideoToTextService._rm_audio_files(chunk_paths)
         text_from_audio = self.spell_corrector.inference_model(text_from_audio)
-        return text_from_audio
+        entities = self.ner.get_entities(text_from_audio)
+        return {
+            'text': text_from_audio,
+            'tags': entities
+        }
 
     @staticmethod
     def _rm_audio_files(paths: List):
