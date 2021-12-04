@@ -27,10 +27,17 @@ class BaseVideoToText(ABC):
 
 class VideoToTextService(BaseVideoToText):
 
-    def __init__(self, audio_to_text_model: BaseModel, spell_corrector: BaseModel, ner: EntityExtractor):
+    def __init__(
+        self, 
+        audio_to_text_model: BaseModel, 
+        spell_corrector: BaseModel, 
+        ner: EntityExtractor,
+        normalizer: BaseModel
+        ):
         self.audio_to_text_model = audio_to_text_model
         self.spell_corrector = spell_corrector
         self.ner = ner
+        self.normalizer = normalizer
     
     @staticmethod
     def _save_audio_from_video(
@@ -64,6 +71,7 @@ class VideoToTextService(BaseVideoToText):
         text_from_audio = self.audio_to_text_model.inference_model(chunk_paths)
         VideoToTextService._rm_audio_files(chunk_paths)
         text_from_audio = self.spell_corrector.inference_model(text_from_audio)
+        text_from_audio = self.normalizer.inference_model(text_from_audio)
         entities = self.ner.get_entities(text_from_audio)
         return {
             'text': text_from_audio,

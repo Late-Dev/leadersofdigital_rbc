@@ -11,6 +11,8 @@ transcrypt_handler = get_handler('dummy_handler')
 
 app = Dash(__name__, suppress_callback_exceptions=True,
            external_stylesheets=[dbc.themes.BOOTSTRAP], title='РБК Xavier video annotator')
+           
+server = app.server
 
 app.layout = html.Div([
     dcc.Location(id='url', refresh=False),
@@ -131,4 +133,4 @@ def display_page(pathname):
 
 
 if __name__ == '__main__':
-    app.run_server(host='0.0.0.0', debug=True)
+    app.run_server(host='0.0.0.0', debug=False)

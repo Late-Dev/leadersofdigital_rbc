@@ -1,9 +1,11 @@
 # leadersofdigital_rbc
--    Создайте виртуальное окружение `python -m venv venv`
--    Активируйте его `source venv/bin/activate`
--    установите зависимости `pip install -r requirements.txt`, установится pytorch, он весит около 1гб
--    запустите проект `python app.py`
 
+## Требования
+установленный Docker и nvidia-docker для запуска на gpu
+
+-    Загрузить подготовленный docker образ `docker pull electriclizard/rbc:latest`
+-    Запустить контейнер на цпу `docker run -p 8050:8050 rbc` и приложение откроется на порту 8050
+-    Для запуска на gpu `docker run --runtime nvidia -p 8050:8050 rbc`
 
 Запустится веб-интерфейс с двумя страницами (ссылки на странице в шапке):
 -    NewsFeed - страница с предобработанными видео с извлеченными из них аудио
@@ -24,7 +26,7 @@
 -    Постобработка текста: исправление ошибок, поиск именованных сущностей, денормализация текста
 
 ## Основной стек технологий
--    Pytorch, transformers
+-    Pytorch, transformers, DeepPavlov
 -    Dash, Dash bootstrap
 -    Docker
 
