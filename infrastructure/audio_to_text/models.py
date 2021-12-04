@@ -13,7 +13,7 @@ class TranscryptModel(BaseModel):
 
     def __init__(self):
         self.device = self._select_device()
-        self.asr = ASREngine("ru", model_path="jonatasgrosman/wav2vec2-large-xlsr-53-russian", device=self.device)
+        self.asr = ASREngine("ru", model_path="VlakoResker/wav2vec2-large-xls-r-300m-ru-en", device=self.device)
 
     def inference_model(self, rec_paths: List) -> str:
         transcriptions = []
