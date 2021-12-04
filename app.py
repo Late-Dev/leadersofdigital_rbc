@@ -7,7 +7,7 @@ import base64
 from handlers.create_handler import get_handler
 import json
 
-transcrypt_handler = get_handler('dummy_handler')
+transcrypt_handler = get_handler('transcrypt_handler')
 
 app = Dash(__name__, suppress_callback_exceptions=True,
            external_stylesheets=[dbc.themes.BOOTSTRAP], title='РБК Xavier video annotator')
