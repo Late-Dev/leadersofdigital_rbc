@@ -5,8 +5,9 @@ from dash_bootstrap_components._components.Card import Card
 from io import BytesIO
 import base64
 from handlers.create_handler import get_handler
+import json
 
-transcrypt_handler = get_handler('transcrypt_handler')
+transcrypt_handler = get_handler('dummy_handler')
 
 app = Dash(__name__, suppress_callback_exceptions=True,
            external_stylesheets=[dbc.themes.BOOTSTRAP], title='РБК Xavier video annotator')
@@ -78,19 +79,23 @@ def upload_file(content, filename):
 <iframe width="560" height="315" src="https://www.youtube.com/embed/qj06URsDq_0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>"""
 
 
-def feed_generate(videos):
+def feed_generate():
+    jsn = open('preprocessed.json')
+    videos = json.load(jsn)
     list_of_cards = []
     for video in videos:
         list_of_cards.append(
-            dbc.Row(
-                [
-                    dbc.Col(html.Iframe(src="https://www.youtube.com/embed/" +
-                                        video['id'], height=315, width=560)),
-                    dbc.Col(video['text'])
-                ]
+            dbc.Card(
+                dbc.Row(
+                    [
+                        dbc.Col(html.Iframe(src="https://www.youtube.com/embed/" +
+                                            video['id'], height=315, width=560)),
+                        dbc.Col(video['text'])
+                    ], style={'margin': '10px'}
+                ), style={'marginBottom': '20px'}
             )
-
         )
+    jsn.close()
 
     return list_of_cards
 
@@ -107,11 +112,8 @@ index_page = html.Div([
             ]),
             # html.Div(dbc.Spinner(color="primary"),
             #          id="cluster-cards", style={'align': 'center'}),
-            dbc.Card(children=feed_generate(
-                [{'id': 'qj06URsDq_0', 'text': 'МОЩНЫЙ ВЗРЫВ В ЦЕНТРЕ МЮНКИНА ЧЕТЫРЕ ЧЕЛОВЕКА ПОСТРАДАЛИ ОДИН В ТЯЖЕЛОМ СОСТОЯНИИ СДЕТОНИРОВАЛА АБИАБОМБА ВРЕМЁН ВТОРОЙ МИРОВОЙ ВОЙНЫ НАСТРОЙ ПЛОЩАДКЕ НЕДАЛЕКО ОТ ГЛАВНОГО ЖИЗНЬ ДОРОЖНОГО ВОКЗАЛА БАВАРСКОЙ СТОЛИЦЕ ВЕСОМ ДВЕСТИ ПЯТЬДЕСЯТ КИЛОГРАММОВ СТРОИТЕЛЕЙ НАТКНУЛИСЬ НА НЕЁ ВО ВРЕМЯ БУРЕНИЯ ДВИЖЕНИЯ ПОЕЗДУВ В ЭТОМ РАЙОНЕ ПРИОСТАНОВЛЕНА ПОЛИЦИЯ ЦЕПИЛА ТЕРРИТОРИЮ ПОЧЕМУ БУМ БУ НЕТ НАРУЖИЛИ ДО НАЧАЛА РАБОТ СЕЙЧАС ВЫЯСНЯЮТ'},
 
-
-                 ]))
+            html.Div(children=feed_generate())
 
         ])
     ])
