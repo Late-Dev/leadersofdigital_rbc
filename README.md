@@ -4,7 +4,7 @@
 Установленный Docker и nvidia-docker для запуска на gpu
 
 -    Загрузить подготовленный docker образ `docker pull electriclizard/rbc:latest`
--    Запустить контейнер на цпу `docker run -p 8050:8050 rbc` и приложение откроется на порту 8050
+-    Запустить контейнер на цпу `docker run -p 8050:8050 electriclizard/rbc:latest` и приложение откроется на порту 8050
 -    Для запуска на gpu `docker run --runtime nvidia -p 8050:8050 electriclizard/rbc:latest`
 
 Запустится веб-интерфейс с двумя страницами (ссылки на странице в шапке):
