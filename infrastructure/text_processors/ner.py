@@ -34,6 +34,7 @@ class EntityExtractor:
         self.names_extractor = NamesExtractor(self.morph_vocab)
 
     def get_entities(self, text: str) -> List[str]:
+        print('ner')
         doc = Doc(text)
 
         doc.segment(self.segmenter)

@@ -19,5 +19,6 @@ class SpellingCorrection(BaseModel):
         self.model = build_model(self.config_path, download=True)
 
     def inference_model(self, model_input) -> str:
+        print('spell checking')
         checked = self.model([model_input])[0]
         return checked

@@ -20,11 +20,13 @@ def create_transcrypt_handler() -> VideoToTextHandler:
     from infrastructure.audio_to_text.models import TranscryptModel
     from infrastructure.text_processors.spell_check import SpellingCorrection
     from infrastructure.text_processors.ner import EntityExtractor
+    from infrastructure.text_processors.normalization import NvidiaInverseNormalizer
 
     transcrypt_model = TranscryptModel()
     spell_corrector = SpellingCorrection()
     ner = EntityExtractor()
-    video_to_text_service = VideoToTextService(transcrypt_model, spell_corrector, ner)
+    normalizer = NvidiaInverseNormalizer()
+    video_to_text_service = VideoToTextService(transcrypt_model, spell_corrector, ner, normalizer)
     
     handler = VideoToTextHandler(video_to_text_service)
     return handler
